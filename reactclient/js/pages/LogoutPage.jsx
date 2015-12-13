@@ -1,9 +1,12 @@
-import React from 'react';
 
 let LogoutPage = React.createClass({
 
+  componentDidMount() {
+    auth.logout();
+  },
+
   render() {
-    return(<div>Logging out...</div>);
+    return <p>You are now logged out</p>
   }
 });
 

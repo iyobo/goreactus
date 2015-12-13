@@ -80,7 +80,7 @@ func init() {
 		beego.ControllerComments{
 			"Login",
 			`/login`,
-			[]string{"get"},
+			[]string{"post"},
 			nil})
 
 	beego.GlobalControllerRouter["goreactus/controllers:UserController"] = append(beego.GlobalControllerRouter["goreactus/controllers:UserController"],

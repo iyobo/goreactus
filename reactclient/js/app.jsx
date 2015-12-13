@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { DefaultRoute, Link, Route, Router, RouteHandler, IndexRoute } from 'react-router';
@@ -7,7 +8,8 @@ import LoginPage from './pages/LoginPage.jsx';
 import LogoutPage from './pages/LogoutPage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import Error404Page from './pages/Error404Page.jsx';
-import ActivityPage from './pages/ActivityPage.jsx';
+import DashboardPage from './pages/DashboardPage.jsx';
+import auth from './auth/auth.js';
 
 
 
@@ -19,13 +21,13 @@ function requireAuth(nextState, replaceState) {
 ReactDOM.render((
     <Router>
         <Route path="/" component={MainLayout}>
-            <IndexRoute component={ActivityPage} />
+            <IndexRoute component={DashboardPage} onEnter={requireAuth} />
             <Route path="login" component={LoginPage}/>
             <Route path="login" component={LogoutPage}/>
             <Route path="about" component={AboutPage}/>
-            <Route path="dashboard" component={ActivityPage} onEnter={requireAuth} />
+            <Route path="dashboard" component={DashboardPage} onEnter={requireAuth} />
             <Route path="*" component={Error404Page}/>
         </Route>
 
     </Router>
-), document.getElementById("mainframe"))
+), document.getElementById("mainframe"));

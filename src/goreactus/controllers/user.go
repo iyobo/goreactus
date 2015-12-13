@@ -96,15 +96,17 @@ func (u *UserController) Delete() {
 // @Param	password		query 	string	true		"The password for login"
 // @Success 200 {string} login success
 // @Failure 403 user not exist
-// @router /login [get]
+// @router /login [post]
 func (u *UserController) Login() {
 	username := u.GetString("username")
 	password := u.GetString("password")
-	if models.Login(username, password) {
-		u.Data["json"] = "login success"
-		u.Data["authkey"] = "login success"
+	success, token := models.Login(username, password)
+	if success==true {
+		u.Data["msg"] = "Success"
+		u.Data["token"] = token
+		u.Data["username"] = username
 	} else {
-		u.Data["json"] = "user not exist"
+		u.Data["msg"] = "Invalid Credentials"
 	}
 	u.ServeJson()
 }
@@ -114,7 +116,10 @@ func (u *UserController) Login() {
 // @Success 200 {string} logout success
 // @router /logout [get]
 func (u *UserController) Logout() {
-	u.Data["json"] = "logout success"
+	sid := u.GetString("sid")
+	models.DeleteSession(sid)
+
+	u.Data["msg"] = "success"
 	u.ServeJson()
 }
 
