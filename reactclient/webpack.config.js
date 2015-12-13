@@ -3,9 +3,9 @@
  */
 var webpack = require('webpack');
 module.exports = {
-    entry: ['webpack/hot/only-dev-server', "./js/app.jsx"],
+    entry: ['webpack/hot/dev-server', "./js/app.jsx"],
     output: {
-        path: __dirname + '/build',
+        path: __dirname,
         filename: "bundle.js"
     },
     module: {
@@ -29,6 +29,12 @@ module.exports = {
     },
     plugins: [
         //new webpack.NoErrorsPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
+            "window.jQuery": "jquery",
+            React: "react"
+        })
     ]
 };

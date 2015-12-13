@@ -2,57 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { DefaultRoute, Link, Route, Router, RouteHandler, IndexRoute } from 'react-router';
 
-import LoginPage from './pages/Login.jsx';
+import MainLayout from './layouts/MainLayout.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import LogoutPage from './pages/LogoutPage.jsx';
+import AboutPage from './pages/AboutPage.jsx';
+import Error404Page from './pages/Error404Page.jsx';
+import ActivityPage from './pages/ActivityPage.jsx';
 
-let App = React.createClass({
-    render() {
-        return (
-            <div className="nav">
-                <h1>App</h1>
-                <ul>
-                    <li><Link to="/login">Login</Link></li>
-                    <li><Link to="/about">About Us</Link></li>
-                </ul>
-                {this.props.children}
-            </div>
-        );
-    }
-});
 
-let LoginPage = React.createClass({
-    render() {
-        return (
-            <div className="nav">
-                <div> We're Login in!</div>
-            </div>
-        );
-    }
-});
-let About = React.createClass({
-    render() {
-        return (
-            <div className="nav">
-                <div> We are the best.</div>
-            </div>
-        );
-    }
-});
-let Error404Page = React.createClass({
-    render() {
-        return (
-            <div className="nav">
-                <div> Nothing here</div>
-            </div>
-        );
-    }
-});
+
+function requireAuth(nextState, replaceState) {
+    if (!auth.loggedIn())
+        replaceState({ nextPathname: nextState.location.pathname }, '/login')
+}
 
 ReactDOM.render((
     <Router>
-        <Route path="/" component={App}>
-            <IndexRoute component={LoginPage} />
+        <Route path="/" component={MainLayout}>
+            <IndexRoute component={ActivityPage} />
             <Route path="login" component={LoginPage}/>
-            <Route path="about" component={About}/>
+            <Route path="login" component={LogoutPage}/>
+            <Route path="about" component={AboutPage}/>
+            <Route path="dashboard" component={ActivityPage} onEnter={requireAuth} />
             <Route path="*" component={Error404Page}/>
         </Route>
 
