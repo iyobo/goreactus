@@ -34,7 +34,8 @@ module.exports = {
             $: "jquery",
             jQuery: "jquery",
             "window.jQuery": "jquery",
-            React: "react"
+            React: "react",
+            reactMixin: "react-mixin"
         })
     ]
 };

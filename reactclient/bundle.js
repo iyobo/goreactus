@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "af80563d73026f5a8314"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5dc04cbf23383c3a557e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -25646,7 +25646,8 @@
 	                authAjaxRequest(username, pass, function (res) {
 	                    if (res.authenticated) {
 	                        localStorage.token = res.token;
-	                        localStorage.user = res.name;
+	                        localStorage.username = res.username;
+	                        localStorage.userid = res.userid;
 	                        if (cb) cb(true);
 	                        _this.onChange(true);
 	                    } else {
@@ -25658,8 +25659,8 @@
 	            getToken: function getToken() {
 	                return localStorage.token;
 	            },
-	            getUser: function getUser() {
-	                return localStorage.user;
+	            getUsername: function getUsername() {
+	                return localStorage.username;
 	            },
 	            logout: function logout(cb) {
 	                delete localStorage.token;
@@ -25681,7 +25682,8 @@
 	                    cb({
 	                        authenticated: true,
 	                        token: data.token,
-	                        name: data.username
+	                        username: data.username,
+	                        userid: data.userid
 	                    });
 	                } else {
 	                    cb({ authenticated: false });
@@ -35065,20 +35067,97 @@
 
 	"use strict";
 
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
-	var LoginPage = React.createClass({
-	  displayName: "LoginPage",
-	  render: function render() {
-	    return React.createElement(
-	      "div",
-	      null,
-	      "Welcome to login"
-	    );
-	  }
-	});
+	var _auth = __webpack_require__(225);
+
+	var _auth2 = _interopRequireDefault(_auth);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var LoginPage = (function (_React$Component) {
+	    _inherits(LoginPage, _React$Component);
+
+	    function LoginPage() {
+	        _classCallCheck(this, LoginPage);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(LoginPage).apply(this, arguments));
+	    }
+
+	    _createClass(LoginPage, [{
+	        key: "getInitialState",
+	        value: function getInitialState() {
+	            this.state = {
+	                username: "",
+	                password: ""
+	            };
+	        }
+
+	        // This will be called when the user clicks on the login button
+
+	    }, {
+	        key: "handleLogin",
+	        value: function handleLogin(e) {
+	            e.preventDefault();
+	            // Here, we call an external AuthService. We"ll create it in the next step
+	            _auth2.default.login();
+	        }
+	    }, {
+	        key: "handleUsernameChange",
+	        value: function handleUsernameChange(e) {
+	            this.setState({
+	                username: evt.target.value
+	            });
+	        }
+	    }, {
+	        key: "handlePasswordChange",
+	        value: function handlePasswordChange(e) {
+	            this.setState({
+	                password: evt.target.value
+	            });
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return React.createElement(
+	                "div",
+	                { id: "loginform" },
+	                React.createElement(
+	                    "h1",
+	                    null,
+	                    "Login"
+	                ),
+	                React.createElement(
+	                    "form",
+	                    { role: "form", onsubmit: this.handleLogin },
+	                    React.createElement(
+	                        "div",
+	                        { className: "form-group" },
+	                        React.createElement("input", { type: "text", value: this.state.username, onChange: this.handleUsernameChange, placeholder: "Username" }),
+	                        React.createElement("input", { type: "password", value: this.state.password, onChange: this.handlePasswordChange, placeholder: "Password" })
+	                    ),
+	                    React.createElement(
+	                        "button",
+	                        { type: "submit", onClick: this.login.bind(this) },
+	                        "Login"
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return LoginPage;
+	})(React.Component);
 
 	exports.default = LoginPage;
 

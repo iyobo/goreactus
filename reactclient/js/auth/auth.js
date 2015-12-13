@@ -18,7 +18,7 @@ module.exports = {
                 if (cb) cb(false)
                 this.onChange(false)
             }
-        })
+        });
     },
 
     getToken() {
