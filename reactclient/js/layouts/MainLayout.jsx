@@ -22,7 +22,18 @@ let MainLayout = React.createClass({
     render() {
         return (
             <div className="nav">
+
+                <div className="right">
+
+                    {this.state.loggedIn ? (
+                        <span>auth.getUser()</span>
+                        ) : (
+                        <span>Anonymous</span>
+                        )}
+
+                </div>
                 <h1>GoReactus</h1>
+
                 <ul>
                     <li><Link to="/dashboard">Dashboard</Link></li>
                     <li><Link to="/about">About</Link></li>

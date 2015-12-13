@@ -1,39 +1,46 @@
 
 module.exports = {
-    login: function(username, pass, cb) {
-    cb = arguments[arguments.length - 1]
-    if (localStorage.token) {
-        if (cb) cb(true)
-        this.onChange(true)
-        return
-    }
-    authAjaxRequest(username, pass, (res) => {
-        if (res.authenticated) {
-        localStorage.token = res.token
-        if (cb) cb(true)
+    login(username, pass, cb) {
+        cb = arguments[arguments.length - 1]
+        if (localStorage.token) {
+            if (cb) cb(true)
             this.onChange(true)
-        } else {
-            if (cb) cb(false)
-            this.onChange(false)
+            return
         }
-    })
-},
+        authAjaxRequest(username, pass, (res) => {
+            if (res.authenticated) {
+                localStorage.token = res.token
+                localStorage.username = res.username
+                localStorage.userid = res.userid
+                if (cb) cb(true)
+                    this.onChange(true)
+            } else {
+                if (cb) cb(false)
+                this.onChange(false)
+            }
+        })
+    },
 
-getToken() {
-    return localStorage.token
-},
+    getToken() {
+        return localStorage.token
+    },
 
-logout(cb) {
-    delete localStorage.token
-    if (cb) cb()
-    this.onChange(false)
-},
+    getUsername(){
+        return localStorage.username
+    },
 
-loggedIn() {
-    return !!localStorage.token
-},
+    logout(cb) {
+        delete localStorage.token
+        delete localStorage.user
+        if (cb) cb()
+        this.onChange(false)
+    },
 
-onChange() {}
+    loggedIn() {
+        return !!localStorage.token
+    },
+
+    onChange() {}
 }
 
 function authAjaxRequest(username, password, cb) {
@@ -44,7 +51,8 @@ function authAjaxRequest(username, password, cb) {
             cb({
                 authenticated: true,
                 token: data.token,
-                name: data.username
+                username: data.username,
+                userid: data.userid
             })
         }
         else{

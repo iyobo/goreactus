@@ -16,7 +16,7 @@ func init() {
 
 type Activity struct {
 	Id       string
-	User     User
+	Username string
 	action	 string
 }
 
@@ -27,9 +27,9 @@ func AddActivity(a Activity) string {
 	return a.Id
 }
 
-func CreateActivity(u User, action string) string {
+func CreateActivity(u string, action string) string {
 	var activity Activity
-	activity.User = u
+	activity.Username = u
 	activity.action = action
 	return AddActivity(activity)
 }
@@ -41,7 +41,7 @@ func GetActivity(uid string) (s *Activity, err error) {
 	return nil, errors.New("Activity does not exist")
 }
 
-func GetAllActivitys() map[string]*Activity {
+func GetAllActivity() map[string]*Activity {
 	return ActivityList
 }
 

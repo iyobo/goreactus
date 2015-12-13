@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "795161fa2187eb779605"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "af80563d73026f5a8314"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -25546,6 +25546,19 @@
 	            'div',
 	            { className: 'nav' },
 	            React.createElement(
+	                'div',
+	                { className: 'right' },
+	                this.state.loggedIn ? React.createElement(
+	                    'span',
+	                    null,
+	                    'auth.getUser()'
+	                ) : React.createElement(
+	                    'span',
+	                    null,
+	                    'Anonymous'
+	                )
+	            ),
+	            React.createElement(
 	                'h1',
 	                null,
 	                'GoReactus'
@@ -25621,7 +25634,7 @@
 	        "use strict";
 
 	        module.exports = {
-	            login: function login(email, pass, cb) {
+	            login: function login(username, pass, cb) {
 	                var _this = this;
 
 	                cb = arguments[arguments.length - 1];
@@ -25630,9 +25643,10 @@
 	                    this.onChange(true);
 	                    return;
 	                }
-	                authAjaxRequest(email, pass, function (res) {
+	                authAjaxRequest(username, pass, function (res) {
 	                    if (res.authenticated) {
 	                        localStorage.token = res.token;
+	                        localStorage.user = res.name;
 	                        if (cb) cb(true);
 	                        _this.onChange(true);
 	                    } else {
@@ -25641,12 +25655,15 @@
 	                    }
 	                });
 	            },
-
 	            getToken: function getToken() {
 	                return localStorage.token;
 	            },
+	            getUser: function getUser() {
+	                return localStorage.user;
+	            },
 	            logout: function logout(cb) {
 	                delete localStorage.token;
+	                delete localStorage.user;
 	                if (cb) cb();
 	                this.onChange(false);
 	            },
@@ -25658,8 +25675,8 @@
 
 	        function authAjaxRequest(username, password, cb) {
 
-	            $.post(SERVER_URL + "/v1/login", { username: username, password: password }, function (response) {
-	                var data = parseJSON(response);
+	            $.post(SERVER_URL + "/v1/user/login", { username: username, password: password }, function (response) {
+	                var data = JSON.parse(response);
 	                if (data && data.token) {
 	                    cb({
 	                        authenticated: true,

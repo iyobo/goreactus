@@ -6,38 +6,31 @@ import (
 
 func init() {
 
-	beego.GlobalControllerRouter["goreactus/controllers:ObjectController"] = append(beego.GlobalControllerRouter["goreactus/controllers:ObjectController"],
+	beego.GlobalControllerRouter["goreactus/controllers:ActivityController"] = append(beego.GlobalControllerRouter["goreactus/controllers:ActivityController"],
 		beego.ControllerComments{
 			"Post",
 			`/`,
 			[]string{"post"},
 			nil})
 
-	beego.GlobalControllerRouter["goreactus/controllers:ObjectController"] = append(beego.GlobalControllerRouter["goreactus/controllers:ObjectController"],
-		beego.ControllerComments{
-			"Get",
-			`/:objectId`,
-			[]string{"get"},
-			nil})
-
-	beego.GlobalControllerRouter["goreactus/controllers:ObjectController"] = append(beego.GlobalControllerRouter["goreactus/controllers:ObjectController"],
+	beego.GlobalControllerRouter["goreactus/controllers:ActivityController"] = append(beego.GlobalControllerRouter["goreactus/controllers:ActivityController"],
 		beego.ControllerComments{
 			"GetAll",
 			`/`,
 			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["goreactus/controllers:ObjectController"] = append(beego.GlobalControllerRouter["goreactus/controllers:ObjectController"],
+	beego.GlobalControllerRouter["goreactus/controllers:ActivityController"] = append(beego.GlobalControllerRouter["goreactus/controllers:ActivityController"],
 		beego.ControllerComments{
-			"Put",
-			`/:objectId`,
-			[]string{"put"},
+			"Get",
+			`/:uid`,
+			[]string{"get"},
 			nil})
 
-	beego.GlobalControllerRouter["goreactus/controllers:ObjectController"] = append(beego.GlobalControllerRouter["goreactus/controllers:ObjectController"],
+	beego.GlobalControllerRouter["goreactus/controllers:ActivityController"] = append(beego.GlobalControllerRouter["goreactus/controllers:ActivityController"],
 		beego.ControllerComments{
 			"Delete",
-			`/:objectId`,
+			`/:uid`,
 			[]string{"delete"},
 			nil})
 
@@ -86,6 +79,13 @@ func init() {
 	beego.GlobalControllerRouter["goreactus/controllers:UserController"] = append(beego.GlobalControllerRouter["goreactus/controllers:UserController"],
 		beego.ControllerComments{
 			"Logout",
+			`/logout`,
+			[]string{"get"},
+			nil})
+
+	beego.GlobalControllerRouter["goreactus/controllers:UserController"] = append(beego.GlobalControllerRouter["goreactus/controllers:UserController"],
+		beego.ControllerComments{
+			"Unauthorized",
 			`/logout`,
 			[]string{"get"},
 			nil})

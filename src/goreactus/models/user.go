@@ -72,13 +72,13 @@ func UpdateUser(uid string, uu *User) (a *User, err error) {
 	return nil, errors.New("User Not Exist")
 }
 
-func Login(username, password string) (success bool, token string) {
+func Login(username, password string) (success bool, token string, userid string) {
 	for _, u := range UserList {
 		if u.Username == username && u.Password == password {
-			return true, CreateSession(*u)
+			return true, CreateSession(u.Id), u.Id
 		}
 	}
-	return false, ""
+	return false, "", ""
 }
 
 func DeleteUser(uid string) {

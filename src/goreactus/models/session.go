@@ -17,7 +17,7 @@ func init() {
 //A typical full session object would have expiry, ip, etc. But this is a volatile DB so...
 type Session struct {
 	Id       	string
-	User     	User
+	UserId     	string
 }
 
 
@@ -27,14 +27,14 @@ func AddSession(s Session) string {
 	return s.Id
 }
 
-func CreateSession(u User) string {
+func CreateSession(userid string) string {
 	var session Session
-	session.User = u
+	session.UserId = userid
 	return AddSession(session)
 }
 
-func GetSession(uid string) (s *Session, err error) {
-	if s, ok := SessionList[uid]; ok {
+func GetSession(sid string) (s *Session, err error) {
+	if s, ok := SessionList[sid]; ok {
 		return s, nil
 	}
 	return nil, errors.New("Session does not exist")
@@ -45,6 +45,6 @@ func GetAllSessions() map[string]*Session {
 }
 
 
-func DeleteSession(uid string) {
-	delete(SessionList, uid)
+func DeleteSession(sid string) {
+	delete(SessionList, sid)
 }

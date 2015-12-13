@@ -100,11 +100,12 @@ func (u *UserController) Delete() {
 func (u *UserController) Login() {
 	username := u.GetString("username")
 	password := u.GetString("password")
-	success, token := models.Login(username, password)
+	success, token, userid := models.Login(username, password)
 	if success==true {
 		u.Data["msg"] = "Success"
 		u.Data["token"] = token
 		u.Data["username"] = username
+		u.Data["userid"] = userid
 	} else {
 		u.Data["msg"] = "Invalid Credentials"
 	}
@@ -123,3 +124,12 @@ func (u *UserController) Logout() {
 	u.ServeJson()
 }
 
+// @Title unauthorized
+// @Description Logs out current logged in user session
+// @Success 403 {string} unauthorized
+// @router /logout [get]
+func (u *UserController) Unauthorized() {
+
+	u.Data["msg"] = "Unauthorized"
+	u.ServeJson()
+}
