@@ -102,6 +102,7 @@ func (u *UserController) Login() {
 	password := u.GetString("password")
 	if models.Login(username, password) {
 		u.Data["json"] = "login success"
+		u.Data["authkey"] = "login success"
 	} else {
 		u.Data["json"] = "user not exist"
 	}

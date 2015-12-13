@@ -19,7 +19,7 @@ let App = React.createClass({
     }
 });
 
-let Login = React.createClass({
+let LoginPage = React.createClass({
     render() {
         return (
             <div className="nav">
