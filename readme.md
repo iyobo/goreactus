@@ -8,7 +8,7 @@ Run the go server (runserver.sh) and the react client server (runclient.sh).
 ### Backend Server:
 sh runserver.sh
 
-If you want to explore how the REST API then...
+If you want to explore the REST API then...
 https://localhost:8080/v1/{resource} where resource is either of [ user || activity ]
 
 
