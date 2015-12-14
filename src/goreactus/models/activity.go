@@ -16,10 +16,11 @@ func init() {
 	ActivityMap["Swimming"] = 1
 	ActivityMap["Yelling"] = 2
 	ActivityMap["Plotting"] = 9
+	ActivityMap["Yoga"] = 1
 }
 
 //Adds a new activity or increments an existing one
-func LogActivity(a string) {
+func LogActivity(a string)  {
 	var cnt = ActivityMap[a]
 
 	if cnt==0{

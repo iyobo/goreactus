@@ -3,7 +3,6 @@ package controllers
 import (
 	"goreactus/models"
 	"github.com/astaxie/beego"
-	"encoding/json"
 )
 
 // Operations about Activity
@@ -19,14 +18,12 @@ type ActivityBody struct {
 // @Title createActivity
 // @Description create activity
 // @Param	body		body 	models.Activity	true		"body for activity content"
-// @Success 200 {string} models.Activity.Id
+// @Success 200 {object} models.Activity
 // @Failure 403 body is empty
 // @router / [post]
 func (c *ActivityController) Post() {
-	var body ActivityBody
-	json.Unmarshal(c.Ctx.Input.RequestBody, &body)
-	models.LogActivity(body.Name)
-	c.Data["json"] = "ok"
+	models.LogActivity(c.GetString("name"))
+	c.Data["json"] = models.GetAllActivity()
 	c.ServeJson()
 }
 
@@ -35,8 +32,8 @@ func (c *ActivityController) Post() {
 // @Success 200 {object} models.Activity
 // @router / [get]
 func (c *ActivityController) GetAll() {
-	activitys := models.GetAllActivity()
-	c.Data["json"] = activitys
+	activities := models.GetAllActivity()
+	c.Data["json"] = activities
 	c.ServeJson()
 }
 
@@ -49,6 +46,6 @@ func (c *ActivityController) GetAll() {
 func (c *ActivityController) Delete() {
 	name := c.GetString(":name")
 	models.DeleteActivity(name)
-	c.Data["json"] = "delete success!"
+	c.Data["json"] = models.GetAllActivity()
 	c.ServeJson()
 }
