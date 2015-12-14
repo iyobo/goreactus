@@ -27,7 +27,7 @@ let LoginPage = React.createClass({
                 me.setState({
                     error: ""
                 });
-                history.replaceState(null, '/dashboard')
+                history.replaceState(null, '#/dashboard')
             }
         });
     },

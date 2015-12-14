@@ -5,11 +5,11 @@ let MainLayout = React.createClass({
     getInitialState() {
         return {
             loggedIn: auth.loggedIn(),
-            user: "Anonymous"
+            user: auth.getUsername()
         }
     },
 
-    updateAuth(loggedIn,username) {
+    updateAuth(loggedIn) {
         var user = this.state.user;
         if(loggedIn)
             user = auth.getUsername();

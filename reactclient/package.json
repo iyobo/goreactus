@@ -21,6 +21,8 @@
     "react-router": "^1.0.2",
     "webpack": "^1.12.9",
     "webpack-dev-server": "*",
-    "jquery": "*"
+    "jquery": "*",
+    "chartjs":"*",
+    "react-chartjs": "*"
   }
 }

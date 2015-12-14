@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c0d72a46ac26a1745456"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "37404e9d721e0dc69b60"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -678,25 +678,29 @@
 
 	var _LoginPage2 = _interopRequireDefault(_LoginPage);
 
-	var _LogoutPage = __webpack_require__(231);
+	var _LogoutPage = __webpack_require__(233);
 
 	var _LogoutPage2 = _interopRequireDefault(_LogoutPage);
 
-	var _AboutPage = __webpack_require__(232);
+	var _AboutPage = __webpack_require__(234);
 
 	var _AboutPage2 = _interopRequireDefault(_AboutPage);
 
-	var _Error404Page = __webpack_require__(233);
+	var _Error404Page = __webpack_require__(235);
 
 	var _Error404Page2 = _interopRequireDefault(_Error404Page);
 
-	var _DashboardPage = __webpack_require__(234);
+	var _DashboardPage = __webpack_require__(236);
 
 	var _DashboardPage2 = _interopRequireDefault(_DashboardPage);
 
 	var _auth = __webpack_require__(225);
 
 	var _auth2 = _interopRequireDefault(_auth);
+
+	var _history = __webpack_require__(231);
+
+	var _history2 = _interopRequireDefault(_history);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -706,7 +710,7 @@
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
-	    null,
+	    { history: _history2.default },
 	    _react2.default.createElement(
 	        _reactRouter.Route,
 	        { path: '/', component: _MainLayout2.default },
@@ -35068,9 +35072,9 @@
 /* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(module, React, Router) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(5), RootInstanceProvider = __webpack_require__(13), ReactMount = __webpack_require__(15), React = __webpack_require__(68); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	/* WEBPACK VAR INJECTION */(function(module, React) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(5), RootInstanceProvider = __webpack_require__(13), ReactMount = __webpack_require__(15), React = __webpack_require__(68); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -35080,10 +35084,14 @@
 
 	var _auth2 = _interopRequireDefault(_auth);
 
+	var _history = __webpack_require__(231);
+
+	var _history2 = _interopRequireDefault(_history);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var LoginPage = React.createClass({
-	    displayName: "LoginPage",
+	    displayName: 'LoginPage',
 	    getInitialState: function getInitialState() {
 	        return {
 	            username: "",
@@ -35091,8 +35099,6 @@
 	            error: ""
 	        };
 	    },
-
-	    mixins: [Router.Navigation],
 
 	    // This will be called when the user clicks on the login button
 	    handleLogin: function handleLogin(e) {
@@ -35110,7 +35116,7 @@
 	                me.setState({
 	                    error: ""
 	                });
-	                this.transitionTo('dashboard');
+	                _history2.default.replaceState(null, '/dashboard');
 	            }
 	        });
 	    },
@@ -35126,51 +35132,51 @@
 	    },
 	    render: function render() {
 	        return React.createElement(
-	            "div",
-	            { id: "loginform" },
+	            'div',
+	            { id: 'loginform' },
 	            React.createElement(
-	                "h1",
+	                'h1',
 	                null,
-	                "Login"
+	                'Login'
 	            ),
 	            React.createElement(
-	                "form",
-	                { role: "form", onSubmit: this.handleLogin },
-	                this.state.error === "" ? React.createElement("span", null) : React.createElement(
-	                    "div",
-	                    { className: "alert alert-warning", role: "alert" },
+	                'form',
+	                { role: 'form', onSubmit: this.handleLogin },
+	                this.state.error === "" ? React.createElement('span', null) : React.createElement(
+	                    'div',
+	                    { className: 'alert alert-warning', role: 'alert' },
 	                    this.state.error
 	                ),
 	                React.createElement(
-	                    "div",
-	                    { className: "form-group" },
+	                    'div',
+	                    { className: 'form-group' },
 	                    React.createElement(
-	                        "div",
-	                        { className: "form-group" },
+	                        'div',
+	                        { className: 'form-group' },
 	                        React.createElement(
-	                            "label",
-	                            { htmlFor: "usr" },
-	                            "Username:"
+	                            'label',
+	                            { htmlFor: 'usr' },
+	                            'Username:'
 	                        ),
-	                        React.createElement("input", { className: "form-control", type: "text", value: this.state.username,
-	                            onChange: this.handleUsernameChange, placeholder: "Username" })
+	                        React.createElement('input', { className: 'form-control', type: 'text', value: this.state.username,
+	                            onChange: this.handleUsernameChange, placeholder: 'Username' })
 	                    ),
 	                    React.createElement(
-	                        "div",
-	                        { className: "form-group" },
+	                        'div',
+	                        { className: 'form-group' },
 	                        React.createElement(
-	                            "label",
-	                            { htmlFor: "usr" },
-	                            "Password:"
+	                            'label',
+	                            { htmlFor: 'usr' },
+	                            'Password:'
 	                        ),
-	                        React.createElement("input", { className: "form-control", type: "password", value: this.state.password,
-	                            onChange: this.handlePasswordChange, placeholder: "Password" })
+	                        React.createElement('input', { className: 'form-control', type: 'password', value: this.state.password,
+	                            onChange: this.handlePasswordChange, placeholder: 'Password' })
 	                    )
 	                ),
 	                React.createElement(
-	                    "button",
-	                    { className: "btn", type: "submit" },
-	                    "Login"
+	                    'button',
+	                    { className: 'btn', type: 'submit' },
+	                    'Login'
 	                )
 	            )
 	        );
@@ -35180,10 +35186,211 @@
 	exports.default = LoginPage;
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(227); if (makeExportsHot(module, __webpack_require__(68))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "LoginPage.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module), __webpack_require__(68), __webpack_require__(173)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module), __webpack_require__(68)))
 
 /***/ },
 /* 231 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(5), RootInstanceProvider = __webpack_require__(13), ReactMount = __webpack_require__(15), React = __webpack_require__(68); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createBrowserHistory = __webpack_require__(232);
+
+	var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = (0, _createBrowserHistory2.default)();
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(227); if (makeExportsHot(module, __webpack_require__(68))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "history.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _invariant = __webpack_require__(178);
+
+	var _invariant2 = _interopRequireDefault(_invariant);
+
+	var _Actions = __webpack_require__(179);
+
+	var _ExecutionEnvironment = __webpack_require__(180);
+
+	var _DOMUtils = __webpack_require__(181);
+
+	var _DOMStateStorage = __webpack_require__(182);
+
+	var _createDOMHistory = __webpack_require__(183);
+
+	var _createDOMHistory2 = _interopRequireDefault(_createDOMHistory);
+
+	/**
+	 * Creates and returns a history object that uses HTML5's history API
+	 * (pushState, replaceState, and the popstate event) to manage history.
+	 * This is the recommended method of managing history in browsers because
+	 * it provides the cleanest URLs.
+	 *
+	 * Note: In browsers that do not support the HTML5 history API full
+	 * page reloads will be used to preserve URLs.
+	 */
+	function createBrowserHistory() {
+	  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+	  !_ExecutionEnvironment.canUseDOM ? process.env.NODE_ENV !== 'production' ? _invariant2['default'](false, 'Browser history needs a DOM') : _invariant2['default'](false) : undefined;
+
+	  var forceRefresh = options.forceRefresh;
+
+	  var isSupported = _DOMUtils.supportsHistory();
+	  var useRefresh = !isSupported || forceRefresh;
+
+	  function getCurrentLocation(historyState) {
+	    historyState = historyState || window.history.state || {};
+
+	    var path = _DOMUtils.getWindowPath();
+	    var _historyState = historyState;
+	    var key = _historyState.key;
+
+	    var state = undefined;
+	    if (key) {
+	      state = _DOMStateStorage.readState(key);
+	    } else {
+	      state = null;
+	      key = history.createKey();
+
+	      if (isSupported) window.history.replaceState(_extends({}, historyState, { key: key }), null, path);
+	    }
+
+	    return history.createLocation(path, state, undefined, key);
+	  }
+
+	  function startPopStateListener(_ref) {
+	    var transitionTo = _ref.transitionTo;
+
+	    function popStateListener(event) {
+	      if (event.state === undefined) return; // Ignore extraneous popstate events in WebKit.
+
+	      transitionTo(getCurrentLocation(event.state));
+	    }
+
+	    _DOMUtils.addEventListener(window, 'popstate', popStateListener);
+
+	    return function () {
+	      _DOMUtils.removeEventListener(window, 'popstate', popStateListener);
+	    };
+	  }
+
+	  function finishTransition(location) {
+	    var basename = location.basename;
+	    var pathname = location.pathname;
+	    var search = location.search;
+	    var hash = location.hash;
+	    var state = location.state;
+	    var action = location.action;
+	    var key = location.key;
+
+	    if (action === _Actions.POP) return; // Nothing to do.
+
+	    _DOMStateStorage.saveState(key, state);
+
+	    var path = (basename || '') + pathname + search + hash;
+	    var historyState = {
+	      key: key
+	    };
+
+	    if (action === _Actions.PUSH) {
+	      if (useRefresh) {
+	        window.location.href = path;
+	        return false; // Prevent location update.
+	      } else {
+	          window.history.pushState(historyState, null, path);
+	        }
+	    } else {
+	      // REPLACE
+	      if (useRefresh) {
+	        window.location.replace(path);
+	        return false; // Prevent location update.
+	      } else {
+	          window.history.replaceState(historyState, null, path);
+	        }
+	    }
+	  }
+
+	  var history = _createDOMHistory2['default'](_extends({}, options, {
+	    getCurrentLocation: getCurrentLocation,
+	    finishTransition: finishTransition,
+	    saveState: _DOMStateStorage.saveState
+	  }));
+
+	  var listenerCount = 0,
+	      stopPopStateListener = undefined;
+
+	  function listenBefore(listener) {
+	    if (++listenerCount === 1) stopPopStateListener = startPopStateListener(history);
+
+	    var unlisten = history.listenBefore(listener);
+
+	    return function () {
+	      unlisten();
+
+	      if (--listenerCount === 0) stopPopStateListener();
+	    };
+	  }
+
+	  function listen(listener) {
+	    if (++listenerCount === 1) stopPopStateListener = startPopStateListener(history);
+
+	    var unlisten = history.listen(listener);
+
+	    return function () {
+	      unlisten();
+
+	      if (--listenerCount === 0) stopPopStateListener();
+	    };
+	  }
+
+	  // deprecated
+	  function registerTransitionHook(hook) {
+	    if (++listenerCount === 1) stopPopStateListener = startPopStateListener(history);
+
+	    history.registerTransitionHook(hook);
+	  }
+
+	  // deprecated
+	  function unregisterTransitionHook(hook) {
+	    history.unregisterTransitionHook(hook);
+
+	    if (--listenerCount === 0) stopPopStateListener();
+	  }
+
+	  return _extends({}, history, {
+	    listenBefore: listenBefore,
+	    listen: listen,
+	    registerTransitionHook: registerTransitionHook,
+	    unregisterTransitionHook: unregisterTransitionHook
+	  });
+	}
+
+	exports['default'] = createBrowserHistory;
+	module.exports = exports['default'];
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)))
+
+/***/ },
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module, React) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(5), RootInstanceProvider = __webpack_require__(13), ReactMount = __webpack_require__(15), React = __webpack_require__(68); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -35221,7 +35428,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module), __webpack_require__(68)))
 
 /***/ },
-/* 232 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module, React) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(5), RootInstanceProvider = __webpack_require__(13), ReactMount = __webpack_require__(15), React = __webpack_require__(68); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -35258,7 +35465,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module), __webpack_require__(68)))
 
 /***/ },
-/* 233 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module, React) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(5), RootInstanceProvider = __webpack_require__(13), ReactMount = __webpack_require__(15), React = __webpack_require__(68); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -35286,7 +35493,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module), __webpack_require__(68)))
 
 /***/ },
-/* 234 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module, React) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(5), RootInstanceProvider = __webpack_require__(13), ReactMount = __webpack_require__(15), React = __webpack_require__(68); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {

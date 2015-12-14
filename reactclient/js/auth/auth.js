@@ -26,12 +26,15 @@ module.exports = {
     },
 
     getUsername(){
-        return localStorage.username
+        if(!!localStorage.token)
+            return localStorage.username;
+        else
+            return "Anonymous";
     },
 
     logout(cb) {
         delete localStorage.token
-        delete localStorage.user
+        delete localStorage.username
         if (cb) cb()
         this.onChange(false)
     },
