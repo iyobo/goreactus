@@ -1,14 +1,25 @@
 # GoReactus:
-You are what you do
+An Activity SPA built with Go (REST API backend) and React. Bundled with webpack.
+Created by Iyobo Eki.
 
-## How to run
+To reduce the number of moving-part dependencies, goreactus uses a mock DB model to store data in memory.
+Beego is the framework used to create the backend API.
+
+
+## How to run in dev mode
 Run the go server (runserver.sh) and the react client server (runclient.sh).
 
-Server:
+### Backend Server:
 sh runserver.sh
-localhost:8008/v1/{resource}
 
-Client:
+If you want to explore the REST API then...
+https://localhost:8080/v1/{resource} where resource is either of [ user || activity ]
+
+
+### Frontend Server:
 sh runclient.sh
+
+then visit
 localhost:8081
 
+Login using any of the provided credentials in the Login page.
