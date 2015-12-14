@@ -20,7 +20,7 @@ function requireAuth(nextState, replaceState) {
 }
 
 ReactDOM.render((
-    <Router history={history}>
+    <Router >
         <Route path="/" component={MainLayout}>
             <IndexRoute component={DashboardPage} onEnter={requireAuth} />
             <Route path="login" component={LoginPage}/>

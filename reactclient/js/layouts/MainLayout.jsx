@@ -38,7 +38,7 @@ let MainLayout = React.createClass({
                         <span className="boldify">Hello {this.state.user}!</span>
                 </div>
 
-                <h1 className="spaceme">GoReactus</h1>
+                <h1 className="spaceme"><a href="/">GoReactus</a></h1>
                 <ul>
                     <li><Link to="/dashboard">Dashboard</Link></li>
                     <li><Link to="/about">About</Link></li>

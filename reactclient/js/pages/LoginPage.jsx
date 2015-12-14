@@ -27,7 +27,8 @@ let LoginPage = React.createClass({
                 me.setState({
                     error: ""
                 });
-                history.replaceState(null, '#/dashboard')
+                //history.replaceState(null, '#/dashboard')
+                window.location = '#/dashboard'
             }
         });
     },
@@ -69,6 +70,16 @@ let LoginPage = React.createClass({
                     </div>
                     <button className="btn" type="submit">Login</button>
                 </form>
+
+                <div>
+                    <br/>
+                    <h4>Try...</h4>
+                    <p>iyobo / password</p>
+                    <p>wolverine / password</p>
+                    <p>phoenix / password</p>
+                    <p>jack / password</p>
+                    <p>adam / password</p>
+                </div>
             </div>
         );
     }
