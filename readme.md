@@ -7,8 +7,8 @@ Beego is the framework used to create the backend API.
 
 
 ## How to run
-Run the go server by running the script runserver.sh.
-Then open reactclient/index.html
+Backend: Run the go server by running the script runserver.sh.
+Client: Then open reactclient/index.html. As always, it's best to run a frontend client from the context of a server, but in this case, running as just the html file is fine.
 
 ### Backend Server:
 sh runserver.sh
