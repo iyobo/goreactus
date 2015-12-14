@@ -12,6 +12,11 @@ type UserController struct {
 	beego.Controller
 }
 
+type Response struct {
+	success bool
+	msg		string
+
+}
 // @Title createUser
 // @Description create users
 // @Param	body		body 	models.User	true		"body for user content"
@@ -22,7 +27,7 @@ func (u *UserController) Post() {
 	var user models.User
 	json.Unmarshal(u.Ctx.Input.RequestBody, &user)
 	uid := models.AddUser(user)
-	u.Data["json"] = map[string]string{"uid": uid}
+	u.Data["json"] = map[string]string{"success":"true","uid": uid}
 	u.ServeJson()
 }
 
@@ -47,7 +52,7 @@ func (u *UserController) Get() {
 	if uid != "" {
 		user, err := models.GetUser(uid)
 		if err != nil {
-			u.Data["json"] = err
+			u.Data["json"] = map[string]string{"success":"false","msg":err.Error()}
 		} else {
 			u.Data["json"] = user
 		}
@@ -67,11 +72,11 @@ func (u *UserController) Put() {
 	if uid != "" {
 		var user models.User
 		json.Unmarshal(u.Ctx.Input.RequestBody, &user)
-		uu, err := models.UpdateUser(uid, &user)
+		_, err := models.UpdateUser(uid, &user)
 		if err != nil {
-			u.Data["json"] = err
+			u.Data["json"] = map[string]string{"success":"false","msg":err.Error()}
 		} else {
-			u.Data["json"] = uu
+			u.Data["json"] = map[string]string{"success":"true"}
 		}
 	}
 	u.ServeJson()
@@ -86,7 +91,7 @@ func (u *UserController) Put() {
 func (u *UserController) Delete() {
 	uid := u.GetString(":uid")
 	models.DeleteUser(uid)
-	u.Data["json"] = "delete success!"
+	u.Data["json"] = map[string]string{"success":"true","msg":"delete success!"}
 	u.ServeJson()
 }
 
@@ -102,12 +107,9 @@ func (u *UserController) Login() {
 	password := u.GetString("password")
 	success, token, userid := models.Login(username, password)
 	if success==true {
-		u.Data["msg"] = "Success"
-		u.Data["token"] = token
-		u.Data["username"] = username
-		u.Data["userid"] = userid
+		u.Data["json"] = map[string]string{"success":"true","msg":"Success", "token":token,"username":username,"userid":userid}
 	} else {
-		u.Data["msg"] = "Invalid Credentials"
+		u.Data["json"] = map[string]string{"success":"false","msg":"Invalid Credentials"}
 	}
 	u.ServeJson()
 }
@@ -120,7 +122,7 @@ func (u *UserController) Logout() {
 	sid := u.GetString("sid")
 	models.DeleteSession(sid)
 
-	u.Data["msg"] = "success"
+	u.Data["json"] = map[string]string{"success":"true","msg":"success"}
 	u.ServeJson()
 }
 
@@ -130,6 +132,6 @@ func (u *UserController) Logout() {
 // @router /logout [get]
 func (u *UserController) Unauthorized() {
 
-	u.Data["msg"] = "Unauthorized"
+	u.Data["json"] = map[string]string{"msg":"Unauthorized"}
 	u.ServeJson()
 }

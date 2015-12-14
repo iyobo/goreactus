@@ -35,7 +35,8 @@ module.exports = {
             jQuery: "jquery",
             "window.jQuery": "jquery",
             React: "react",
-            reactMixin: "react-mixin"
+            reactMixin: "react-mixin",
+            Router: "react-router"
         })
     ]
 };

@@ -1,8 +1,10 @@
+import auth from '../auth/auth.js'
 
 let LogoutPage = React.createClass({
 
   componentDidMount() {
     auth.logout();
+      this.setState({"logged":"out"})
   },
 
   render() {

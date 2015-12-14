@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5dc04cbf23383c3a557e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c0d72a46ac26a1745456"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -712,7 +712,7 @@
 	        { path: '/', component: _MainLayout2.default },
 	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _DashboardPage2.default, onEnter: requireAuth }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _LoginPage2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _LogoutPage2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'logout', component: _LogoutPage2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'about', component: _AboutPage2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'dashboard', component: _DashboardPage2.default, onEnter: requireAuth }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '*', component: _Error404Page2.default })
@@ -25529,17 +25529,24 @@
 	    displayName: 'MainLayout',
 	    getInitialState: function getInitialState() {
 	        return {
-	            loggedIn: _auth2.default.loggedIn()
+	            loggedIn: _auth2.default.loggedIn(),
+	            user: "Anonymous"
 	        };
 	    },
-	    updateAuth: function updateAuth(loggedIn) {
+	    updateAuth: function updateAuth(loggedIn, username) {
+	        var user = this.state.user;
+	        if (loggedIn) user = _auth2.default.getUsername();else user = "Anonymous";
+
 	        this.setState({
-	            loggedIn: loggedIn
+	            loggedIn: loggedIn,
+	            user: user
 	        });
 	    },
 	    componentWillMount: function componentWillMount() {
 	        _auth2.default.onChange = this.updateAuth;
-	        _auth2.default.login();
+	    },
+	    activeUsername: function activeUsername() {
+	        return _auth2.default.getUsername();
 	    },
 	    render: function render() {
 	        return React.createElement(
@@ -25547,20 +25554,18 @@
 	            { className: 'nav' },
 	            React.createElement(
 	                'div',
-	                { className: 'right' },
-	                this.state.loggedIn ? React.createElement(
+	                { className: 'right spaceme' },
+	                React.createElement(
 	                    'span',
-	                    null,
-	                    'auth.getUser()'
-	                ) : React.createElement(
-	                    'span',
-	                    null,
-	                    'Anonymous'
+	                    { className: 'boldify' },
+	                    'Hello ',
+	                    this.state.user,
+	                    '!'
 	                )
 	            ),
 	            React.createElement(
 	                'h1',
-	                null,
+	                { className: 'spaceme' },
 	                'GoReactus'
 	            ),
 	            React.createElement(
@@ -25676,9 +25681,9 @@
 
 	        function authAjaxRequest(username, password, cb) {
 
-	            $.post(SERVER_URL + "/v1/user/login", { username: username, password: password }, function (response) {
-	                var data = JSON.parse(response);
-	                if (data && data.token) {
+	            $.post(SERVER_URL + "/v1/user/login", { username: username, password: password }, function (data) {
+	                //var data = JSON.parse(response);
+	                if (data.success === "true") {
 	                    cb({
 	                        authenticated: true,
 	                        token: data.token,
@@ -35063,11 +35068,9 @@
 /* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(module, React) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(5), RootInstanceProvider = __webpack_require__(13), ReactMount = __webpack_require__(15), React = __webpack_require__(68); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	/* WEBPACK VAR INJECTION */(function(module, React, Router) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(5), RootInstanceProvider = __webpack_require__(13), ReactMount = __webpack_require__(15), React = __webpack_require__(68); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 
 	"use strict";
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -35079,90 +35082,105 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var LoginPage = React.createClass({
+	    displayName: "LoginPage",
+	    getInitialState: function getInitialState() {
+	        return {
+	            username: "",
+	            password: "",
+	            error: ""
+	        };
+	    },
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	    mixins: [Router.Navigation],
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var LoginPage = (function (_React$Component) {
-	    _inherits(LoginPage, _React$Component);
-
-	    function LoginPage() {
-	        _classCallCheck(this, LoginPage);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(LoginPage).apply(this, arguments));
-	    }
-
-	    _createClass(LoginPage, [{
-	        key: "getInitialState",
-	        value: function getInitialState() {
-	            this.state = {
-	                username: "",
-	                password: ""
-	            };
-	        }
-
-	        // This will be called when the user clicks on the login button
-
-	    }, {
-	        key: "handleLogin",
-	        value: function handleLogin(e) {
-	            e.preventDefault();
-	            // Here, we call an external AuthService. We"ll create it in the next step
-	            _auth2.default.login();
-	        }
-	    }, {
-	        key: "handleUsernameChange",
-	        value: function handleUsernameChange(e) {
-	            this.setState({
-	                username: evt.target.value
-	            });
-	        }
-	    }, {
-	        key: "handlePasswordChange",
-	        value: function handlePasswordChange(e) {
-	            this.setState({
-	                password: evt.target.value
-	            });
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            return React.createElement(
-	                "div",
-	                { id: "loginform" },
-	                React.createElement(
-	                    "h1",
-	                    null,
-	                    "Login"
+	    // This will be called when the user clicks on the login button
+	    handleLogin: function handleLogin(e) {
+	        e.preventDefault();
+	        var me = this;
+	        console.log("Authenticating with server...");
+	        // Here, we call an external AuthService. We"ll create it in the next step
+	        _auth2.default.login(this.state.username, this.state.password, function (status) {
+	            console.log("loggedin: " + status);
+	            if (!status) {
+	                me.setState({
+	                    error: "Login: Invalid Credentials"
+	                });
+	            } else {
+	                me.setState({
+	                    error: ""
+	                });
+	                this.transitionTo('dashboard');
+	            }
+	        });
+	    },
+	    handleUsernameChange: function handleUsernameChange(e) {
+	        this.setState({
+	            username: e.target.value
+	        });
+	    },
+	    handlePasswordChange: function handlePasswordChange(e) {
+	        this.setState({
+	            password: e.target.value
+	        });
+	    },
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            { id: "loginform" },
+	            React.createElement(
+	                "h1",
+	                null,
+	                "Login"
+	            ),
+	            React.createElement(
+	                "form",
+	                { role: "form", onSubmit: this.handleLogin },
+	                this.state.error === "" ? React.createElement("span", null) : React.createElement(
+	                    "div",
+	                    { className: "alert alert-warning", role: "alert" },
+	                    this.state.error
 	                ),
 	                React.createElement(
-	                    "form",
-	                    { role: "form", onsubmit: this.handleLogin },
+	                    "div",
+	                    { className: "form-group" },
 	                    React.createElement(
 	                        "div",
 	                        { className: "form-group" },
-	                        React.createElement("input", { type: "text", value: this.state.username, onChange: this.handleUsernameChange, placeholder: "Username" }),
-	                        React.createElement("input", { type: "password", value: this.state.password, onChange: this.handlePasswordChange, placeholder: "Password" })
+	                        React.createElement(
+	                            "label",
+	                            { htmlFor: "usr" },
+	                            "Username:"
+	                        ),
+	                        React.createElement("input", { className: "form-control", type: "text", value: this.state.username,
+	                            onChange: this.handleUsernameChange, placeholder: "Username" })
 	                    ),
 	                    React.createElement(
-	                        "button",
-	                        { type: "submit", onClick: this.login.bind(this) },
-	                        "Login"
+	                        "div",
+	                        { className: "form-group" },
+	                        React.createElement(
+	                            "label",
+	                            { htmlFor: "usr" },
+	                            "Password:"
+	                        ),
+	                        React.createElement("input", { className: "form-control", type: "password", value: this.state.password,
+	                            onChange: this.handlePasswordChange, placeholder: "Password" })
 	                    )
+	                ),
+	                React.createElement(
+	                    "button",
+	                    { className: "btn", type: "submit" },
+	                    "Login"
 	                )
-	            );
-	        }
-	    }]);
-
-	    return LoginPage;
-	})(React.Component);
+	            )
+	        );
+	    }
+	});
 
 	exports.default = LoginPage;
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(227); if (makeExportsHot(module, __webpack_require__(68))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "LoginPage.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module), __webpack_require__(68)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module), __webpack_require__(68), __webpack_require__(173)))
 
 /***/ },
 /* 231 */
@@ -35176,10 +35194,17 @@
 	  value: true
 	});
 
+	var _auth = __webpack_require__(225);
+
+	var _auth2 = _interopRequireDefault(_auth);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	var LogoutPage = React.createClass({
 	  displayName: "LogoutPage",
 	  componentDidMount: function componentDidMount() {
-	    auth.logout();
+	    _auth2.default.logout();
+	    this.setState({ "logged": "out" });
 	  },
 	  render: function render() {
 	    return React.createElement(

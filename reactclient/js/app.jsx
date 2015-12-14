@@ -10,6 +10,7 @@ import AboutPage from './pages/AboutPage.jsx';
 import Error404Page from './pages/Error404Page.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import auth from './auth/auth.js';
+import history from './history.jsx';
 
 
 
@@ -19,11 +20,11 @@ function requireAuth(nextState, replaceState) {
 }
 
 ReactDOM.render((
-    <Router>
+    <Router history={history}>
         <Route path="/" component={MainLayout}>
             <IndexRoute component={DashboardPage} onEnter={requireAuth} />
             <Route path="login" component={LoginPage}/>
-            <Route path="login" component={LogoutPage}/>
+            <Route path="logout" component={LogoutPage}/>
             <Route path="about" component={AboutPage}/>
             <Route path="dashboard" component={DashboardPage} onEnter={requireAuth} />
             <Route path="*" component={Error404Page}/>

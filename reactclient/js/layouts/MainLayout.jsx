@@ -4,36 +4,41 @@ import auth from '../auth/auth.js';
 let MainLayout = React.createClass({
     getInitialState() {
         return {
-            loggedIn: auth.loggedIn()
+            loggedIn: auth.loggedIn(),
+            user: "Anonymous"
         }
     },
 
-    updateAuth(loggedIn) {
+    updateAuth(loggedIn,username) {
+        var user = this.state.user;
+        if(loggedIn)
+            user = auth.getUsername();
+        else
+            user = "Anonymous";
+
         this.setState({
-            loggedIn: loggedIn
+            loggedIn: loggedIn,
+            user: user
         })
     },
 
     componentWillMount() {
         auth.onChange = this.updateAuth
-        auth.login()
+    },
+
+    activeUsername(){
+        return auth.getUsername();
     },
 
     render() {
         return (
             <div className="nav">
 
-                <div className="right">
-
-                    {this.state.loggedIn ? (
-                        <span>auth.getUser()</span>
-                        ) : (
-                        <span>Anonymous</span>
-                        )}
-
+                <div className="right spaceme">
+                        <span className="boldify">Hello {this.state.user}!</span>
                 </div>
-                <h1>GoReactus</h1>
 
+                <h1 className="spaceme">GoReactus</h1>
                 <ul>
                     <li><Link to="/dashboard">Dashboard</Link></li>
                     <li><Link to="/about">About</Link></li>

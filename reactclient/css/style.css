@@ -34,3 +34,12 @@ div{
 .right{
     float: right;
 }
+
+.spaceme{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.boldify{
+    font-size: 16px;
+}

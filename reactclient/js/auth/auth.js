@@ -45,9 +45,9 @@ module.exports = {
 
 function authAjaxRequest(username, password, cb) {
 
-    $.post(SERVER_URL+"/v1/user/login",{username: username, password: password}, function(response){
-        var data = JSON.parse(response);
-        if(data && data.token){
+    $.post(SERVER_URL+"/v1/user/login",{username: username, password: password}, function(data){
+        //var data = JSON.parse(response);
+        if(data.success==="true"){
             cb({
                 authenticated: true,
                 token: data.token,

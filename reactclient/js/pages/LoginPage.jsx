@@ -1,4 +1,5 @@
 import auth from '../auth/auth.js'
+import history from '../history.jsx'
 
 let LoginPage = React.createClass({
 
@@ -20,8 +21,13 @@ let LoginPage = React.createClass({
             console.log("loggedin: " + status);
             if (!status) {
                 me.setState({
-                    error: "Invalid Credentials"
+                    error: "Login: Invalid Credentials"
                 });
+            }else{
+                me.setState({
+                    error: ""
+                });
+                history.replaceState(null, '/dashboard')
             }
         });
     },
