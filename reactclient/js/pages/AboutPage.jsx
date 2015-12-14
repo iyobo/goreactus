@@ -2,8 +2,8 @@ let AboutPage = React.createClass({
 
   render() {
     return(<div>
-      <h1>You are what you do</h1> by Iyobo Eki.
-      <p>This app tells you what you're most likely to do given the things you've already done.</p>
+      <h2>About</h2>
+      <p>This is a routed SPA built with Golang and ReactJS. Compiled client-side with Webpack. Created by <a target="_blank" href="https://ca.linkedin.com/in/iyobo-eki-6812895">Iyobo Eki</a></p>
     </div>);
   }
 });
