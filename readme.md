@@ -6,8 +6,9 @@ To reduce the number of moving-part dependencies, goreactus uses a mock DB model
 Beego is the framework used to create the backend API.
 
 
-## How to run in dev mode
-Run the go server (runserver.sh) and the react client server (runclient.sh).
+## How to run
+Run the go server by running the script runserver.sh.
+Then open reactclient/index.html
 
 ### Backend Server:
 sh runserver.sh
@@ -23,3 +24,5 @@ then visit
 localhost:8081
 
 Login using any of the provided credentials in the Login page.
+
+ALSO, try interacting with the Activity Graph using various users.
