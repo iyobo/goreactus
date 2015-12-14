@@ -2,9 +2,8 @@ package controllers
 
 import (
 	"goreactus/models"
-	"encoding/json"
-
 	"github.com/astaxie/beego"
+	"encoding/json"
 )
 
 // Operations about Activity
@@ -12,6 +11,10 @@ type ActivityController struct {
 	beego.Controller
 }
 
+type ActivityBody struct {
+	Name	string
+	Change	string
+}
 
 // @Title createActivity
 // @Description create activity
@@ -20,10 +23,10 @@ type ActivityController struct {
 // @Failure 403 body is empty
 // @router / [post]
 func (c *ActivityController) Post() {
-	var activity models.Activity
-	json.Unmarshal(c.Ctx.Input.RequestBody, &activity)
-	uid := models.AddActivity(activity)
-	c.Data["json"] = map[string]string{"uid": uid}
+	var body ActivityBody
+	json.Unmarshal(c.Ctx.Input.RequestBody, &body)
+	models.LogActivity(body.Name)
+	c.Data["json"] = "ok"
 	c.ServeJson()
 }
 
@@ -37,25 +40,6 @@ func (c *ActivityController) GetAll() {
 	c.ServeJson()
 }
 
-// @Title Get
-// @Description get activity by uid
-// @Param	uid		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.Activity
-// @Failure 403 :uid is empty
-// @router /:uid [get]
-func (c *ActivityController) Get() {
-	uid := c.GetString(":uid")
-	if uid != "" {
-		activity, err := models.GetActivity(uid)
-		if err != nil {
-			c.Data["json"] = err
-		} else {
-			c.Data["json"] = activity
-		}
-	}
-	c.ServeJson()
-}
-
 // @Title delete
 // @Description delete the activity
 // @Param	uid		path 	string	true		"The activity id you want to delete"
@@ -63,8 +47,8 @@ func (c *ActivityController) Get() {
 // @Failure 403 uid is empty
 // @router /:uid [delete]
 func (c *ActivityController) Delete() {
-	uid := c.GetString(":uid")
-	models.DeleteActivity(uid)
+	name := c.GetString(":name")
+	models.DeleteActivity(name)
 	c.Data["json"] = "delete success!"
 	c.ServeJson()
 }

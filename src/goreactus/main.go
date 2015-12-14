@@ -32,15 +32,22 @@ func main() {
 	var AuthFilter = func(ctx *context.Context) {
 		/*TODO: Lazy & unsafe session check. We're not checking for session token validity.
 		 Only if the user is sending us a session token.
-		 This was never meant to be a full application, neither should this work be used in a full application.
-		 It is simply an expose of the synergy between React and Go.
+		 This was never meant to be a full application, neither should this demo work be used in a full application.
+		 It is simply an expose of how Go works with React.
+		 - Iyobo Eki
 		 */
 		auth := ctx.Input.Header("Authorization")
 		if auth == "" {
 			ctx.Redirect(302, "/v1/user/unauthorized")
 		}
 	}
-	beego.InsertFilter("/*/activity", beego.BeforeRouter, AuthFilter)
+
+	// No auth middleware for user or activity controller to allow for easy viewing from REST API without auth header
+	beego.InsertFilter("/nevermind", beego.BeforeRouter, AuthFilter)
+	//beego.InsertFilter("/*/activity", beego.BeforeRouter, AuthFilter)
+	//beego.InsertFilter("/*/user", beego.BeforeRouter, AuthFilter)
+
+
 
 
 	if beego.RunMode == "dev" {

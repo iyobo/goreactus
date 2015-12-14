@@ -129,7 +129,7 @@ func (u *UserController) Logout() {
 // @Title unauthorized
 // @Description Logs out current logged in user session
 // @Success 403 {string} unauthorized
-// @router /logout [get]
+// @router /unauthorized [get]
 func (u *UserController) Unauthorized() {
 
 	u.Data["json"] = map[string]string{"msg":"Unauthorized"}

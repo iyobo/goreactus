@@ -1,51 +1,42 @@
 package models
 
 import (
-	"errors"
-	"strconv"
-	"time"
+
 )
 
 var (
-	ActivityList map[string]*Activity
+	ActivityMap map[string]int
 )
 
 func init() {
-	ActivityList = make(map[string]*Activity)
+	ActivityMap = make(map[string]int)
+	ActivityMap["Eating"] = 3
+	ActivityMap["Coding"] = 6
+	ActivityMap["Biking"] = 1
+	ActivityMap["Swimming"] = 1
+	ActivityMap["Yelling"] = 2
+	ActivityMap["Plotting"] = 9
 }
 
-type Activity struct {
-	Id       string
-	Username string
-	action	 string
-}
+//Adds a new activity or increments an existing one
+func LogActivity(a string) {
+	var cnt = ActivityMap[a]
 
-
-func AddActivity(a Activity) string {
-	a.Id = "activity_" + strconv.FormatInt(time.Now().UnixNano(), 10)
-	ActivityList[a.Id] = &a
-	return a.Id
-}
-
-func CreateActivity(u string, action string) string {
-	var activity Activity
-	activity.Username = u
-	activity.action = action
-	return AddActivity(activity)
-}
-
-func GetActivity(uid string) (s *Activity, err error) {
-	if s, ok := ActivityList[uid]; ok {
-		return s, nil
+	if cnt==0{
+		//Create new label....or rather just ignore
+		//ActivityMap[a] = 1
+	}else{
+		//increment
+		ActivityMap[a] = cnt+1
 	}
-	return nil, errors.New("Activity does not exist")
+
 }
 
-func GetAllActivity() map[string]*Activity {
-	return ActivityList
+func GetAllActivity() map[string]int {
+	return ActivityMap
 }
 
 
-func DeleteActivity(uid string) {
-	delete(ActivityList, uid)
+func DeleteActivity(activity string) {
+	delete(ActivityMap, activity)
 }

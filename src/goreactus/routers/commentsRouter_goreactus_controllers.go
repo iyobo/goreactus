@@ -22,13 +22,6 @@ func init() {
 
 	beego.GlobalControllerRouter["goreactus/controllers:ActivityController"] = append(beego.GlobalControllerRouter["goreactus/controllers:ActivityController"],
 		beego.ControllerComments{
-			"Get",
-			`/:uid`,
-			[]string{"get"},
-			nil})
-
-	beego.GlobalControllerRouter["goreactus/controllers:ActivityController"] = append(beego.GlobalControllerRouter["goreactus/controllers:ActivityController"],
-		beego.ControllerComments{
 			"Delete",
 			`/:uid`,
 			[]string{"delete"},
@@ -86,7 +79,7 @@ func init() {
 	beego.GlobalControllerRouter["goreactus/controllers:UserController"] = append(beego.GlobalControllerRouter["goreactus/controllers:UserController"],
 		beego.ControllerComments{
 			"Unauthorized",
-			`/logout`,
+			`/unauthorized`,
 			[]string{"get"},
 			nil})
 
